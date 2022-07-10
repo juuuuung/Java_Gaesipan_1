@@ -18,7 +18,7 @@ public class Main {
 				continue;
 			}
 
-			if (command.equals("exit")) { // exit입력 하면 break
+			if (command.equals("exit")) { // exit입력 하면 break ? equals 뭔지 모름
 				break;
 			} else if (command.equals("article list")) { // article list 출력
 				if (lastIndex != 0) {
