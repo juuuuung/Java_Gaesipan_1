@@ -23,7 +23,7 @@ public class another {
 			if (command.equals("exit")) {
 				break;
 			} else if (command.equals("article list")) { // <==== 게시물 목록
-				// 게시글의 유무 여부r
+				// 게시글의 유무 여부
 				if (Articles.size() == 0) {
 					System.out.println("게시글이 없음");
 					continue;
