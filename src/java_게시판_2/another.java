@@ -80,15 +80,33 @@ public class another {
 
 					continue;
 				}
-			} else if (command.equals("article detail")) {
-				System.out.println("자세히볼 글의 번호");
-				int num = s.nextInt()-1;
-				if (Articles.size() == 0) {
-					System.out.println("게시글 없음");
-				} else {
-					System.out.printf("번호 : %d\n제목 : %s\n내용 : %s\n", Articles.get(num).TitleIndex,
-							Articles.get(num).Title, Articles.get(num).Article);
+			} else if (command.startsWith("article detail")) { // startswith = 이걸로 시작 한다면..
+
+				String[] SplitsCommand = command.split(" ");
+				int id = Integer.parseInt(SplitsCommand[2]);
+				boolean found = false;
+
+				// 찾은 게시물 클래스 저장 용도
+				Article foundArticle = null;
+
+				// ?=======만약 id가 Articles.size() 보다 크다면 실행 되지 않도록 수정========
+				for (int i = 0; i < Articles.size(); i++) {
+					Article article = Articles.get(i);
+					if (article.TitleIndex == id) {
+						found = true;
+						foundArticle = article;
+						break;
+					}
 				}
+				if (found == false) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다. \n", id);
+					continue;
+				} else {
+					System.out.printf("번호 : %d\n제목 : %s\n내용 : %s", foundArticle.TitleIndex, foundArticle.Title,
+							foundArticle.Article);
+				}
+			} else {
+				System.out.println("존재하지 않는 명령어");
 			}
 		}
 		s.close();
