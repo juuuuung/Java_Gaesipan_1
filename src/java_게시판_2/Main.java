@@ -12,6 +12,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		// TODO: article list 해서 Articles의 수가 5개가 넘어가면 페이지 이동할 수 있도록 하기
+
 		List<article> Articles = new ArrayList<>();
 
 		int TextIndex = 0;
@@ -19,7 +21,7 @@ public class Main {
 
 		Scanner s = new Scanner(System.in);
 		while (true) { // 명령어 반복
-			System.out.printf("명령어 입력 : ");
+			System.out.printf("명령어 입력 = > ");
 			String command = s.nextLine(); // Scanner class
 
 			command = command.trim(); // 공백제거후 command에 저장
@@ -35,14 +37,24 @@ public class Main {
 					System.out.println("게시물이 없습니다.");
 					continue;
 				} else {
-					for (int i = Articles.size() - 1; i >= 0; i--) {
-						article article = Articles.get(i);
-						System.out.println("===================(list)=================");
-						System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
+					else {
+//						for(int i = Articles.size() / 5; i <= 0;  )
+						
+						for (int i = Articles.size() - 1; i >= 0; i--) {
+
+							PrintEquals.PrintFormat("List", i + 1); // ==
+
+							article article = Articles.get(i);
+							System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
+						}
 					}
+
+					PrintEquals.main(); // ==
 				}
 			} else if (command.equals("article write")) { // 게시글 작성
 				TextIndex++;
+
+				PrintEquals.PrintFormat("Write", TextIndex); // ==
 
 				System.out.printf("제목 : ");
 				String TextTitle = s.nextLine();
@@ -53,6 +65,8 @@ public class Main {
 				article NewArticle = new article(TextIndex, TextTitle, TextArticle, date.main());
 				Articles.add(NewArticle);
 
+				PrintEquals.main(); // ==
+
 			} else if (command.startsWith("article detail")) {
 				String[] SplitCommand = command.split(" ");
 				int id = Integer.parseInt(SplitCommand[2]);
@@ -60,9 +74,14 @@ public class Main {
 				if (id > Articles.size()) {
 					System.out.println("게시글이 없음");
 				} else {
+
+					PrintEquals.PrintFormat("Detail", id); // ==
+
 					article newarticle = Articles.get(id - 1);
 					System.out.printf("번호 : %d\n제목 : %s\n내용 : %s\n날짜 : %s\n", newarticle.TextNum, newarticle.TextTitle,
 							newarticle.TextArticle, newarticle.FormatedNow);
+
+					PrintEquals.main(); // ==
 				}
 
 			} else if (command.startsWith("article delete")) {
@@ -94,7 +113,7 @@ public class Main {
 					for (int i = 0; i < Articles.size(); i++) {
 						Articles.get(i).TextNum = i + 1;
 					}
-					System.out.printf("%d번 게시글이 삭제되었습니다\n", id);
+					System.out.printf("\n%d번 게시글이 삭제되었습니다\n", id);
 					TextIndex--;
 				}
 
@@ -107,6 +126,8 @@ public class Main {
 					continue;
 				}
 
+				PrintEquals.PrintFormat("Correction", id); // ==
+
 				System.out.printf("제목 : ");
 				String TextTitle = s.nextLine();
 
@@ -118,6 +139,8 @@ public class Main {
 				Articles.get(id - 1).TextTitle = TextTitle;
 				Articles.get(id - 1).TextArticle = TextArticle;
 				Articles.get(id - 1).FormatedNow = date.main();
+
+				PrintEquals.main(); // ==
 
 				/*
 				 * LocalDateTime now = LocalDateTime.now();
