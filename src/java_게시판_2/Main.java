@@ -1,9 +1,5 @@
 package java_게시판_2;
 
-import java.text.Format;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,7 +34,10 @@ public class Main {
 					continue;
 				} else if (Articles.size() > 5) {
 					while (true) {
-						int LastPage = Articles.size() / 5 + Articles.size() % 5;
+						int LastPage = Articles.size() / 5;
+						if (Articles.size() % 5 > 0) {
+							LastPage += 1;
+						}
 						System.out.printf("보고싶은 페이지 (현재 페이지 %d) : ", LastPage);
 						int page = s.nextInt();
 						if (page > LastPage || page == 0000) {
@@ -51,6 +50,7 @@ public class Main {
 									article article = Articles.get(i);
 									System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
 								}
+								continue;
 							}
 							for (int i = (page * 5) - 5; i < page * 5; i++) {
 								article article = Articles.get(i);
