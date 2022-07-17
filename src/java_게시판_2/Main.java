@@ -1,5 +1,6 @@
 package java_게시판_2;
 
+import java.text.Format;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,7 @@ public class Main {
 				} else {
 					for (int i = Articles.size() - 1; i >= 0; i--) {
 						article article = Articles.get(i);
+						System.out.println("===================(list)=================");
 						System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
 					}
 				}
@@ -48,11 +50,7 @@ public class Main {
 				System.out.printf("내용 : ");
 				String TextArticle = s.nextLine();
 
-				LocalDateTime now = LocalDateTime.now();
-
-				String FormatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
-
-				article NewArticle = new article(TextIndex, TextTitle, TextArticle, FormatedNow);
+				article NewArticle = new article(TextIndex, TextTitle, TextArticle, date.main());
 				Articles.add(NewArticle);
 
 			} else if (command.startsWith("article detail")) {
@@ -70,43 +68,64 @@ public class Main {
 			} else if (command.startsWith("article delete")) {
 				String[] SplitCommand = command.split(" ");
 				int id = Integer.parseInt(SplitCommand[2]);
-				
-				//<==============방법 1==============>
-				int foundIndex = -1;
-				
-				for(int i=0; i < Articles.size(); i++) {
-					article newarticle = Articles.get(i);
-					if(newarticle.TextNum == id) {
-						foundIndex = i;
-						break;
-					}
-				}
-				if(foundIndex == -1) {
-					System.out.printf("%d 존재 X", id);
-				}
-				Articles.remove(foundIndex);
-				System.out.printf("%d 게시물 삭제 완료", id);
 
-				//<==============방법 2===================>
-				/*if (id > Articles.size()) {
+				// <==============방법 1==============>
+//				int foundIndex = -1;
+//
+//				for (int i = 0; i < Articles.size(); i++) {
+//					article newarticle = Articles.get(i);
+//					if (newarticle.TextNum == id) {
+//						foundIndex = i;
+//						break;
+//					}
+//				}
+//				if (foundIndex == -1) {
+//					System.out.printf("%d 존재 X", id);
+//				}
+//				Articles.remove(foundIndex);
+//				System.out.printf("%d 게시물 삭제 완료", id);
+
+				// <==============방법 2===================>
+
+				if (id > Articles.size()) {
 					System.out.println("게시물이 없음");
 				} else {
-					Articles.remove(id - 1);
-					// 앞으로 땡겨줌 글 번호를
+					Articles.remove(id - 1); // 앞으로 땡겨줌 글 번호를
 					for (int i = 0; i < Articles.size(); i++) {
 						Articles.get(i).TextNum = i + 1;
 					}
 					System.out.printf("%d번 게시글이 삭제되었습니다\n", id);
 					TextIndex--;
-				}*/
+				}
+
 			} else if (command.startsWith("article correction")) {
 				String[] SplitCommand = command.split(" ");
 				int id = Integer.parseInt(SplitCommand[2]);
-				
-				article newarticle = Articles.get(id-1);
-				
-				System.out.println("제목 : ");
-				String Text
+
+				if (id > Articles.size()) {
+					System.out.println("게시물 없음");
+					continue;
+				}
+
+				System.out.printf("제목 : ");
+				String TextTitle = s.nextLine();
+
+				System.out.printf("내용 : ");
+				String TextArticle = s.nextLine();
+
+				// todo 저장하기
+
+				Articles.get(id - 1).TextTitle = TextTitle;
+				Articles.get(id - 1).TextArticle = TextArticle;
+				Articles.get(id - 1).FormatedNow = date.main();
+
+				/*
+				 * LocalDateTime now = LocalDateTime.now();
+				 * 
+				 * String FormatedNow =
+				 * now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
+				 */
+
 			} else {
 				System.out.println("명령어 없음");
 			}
