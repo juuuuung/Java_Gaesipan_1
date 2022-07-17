@@ -30,23 +30,45 @@ public class Main {
 				continue;
 			}
 
-			if (command.equals("exit")) { // exit입력 하면 break ? equals 뭔지 모름ss
+			if (command.equals("exit")) { // exit입력 하면 break ? equals 뭔지 모름
 				break;
 			} else if (command.equals("article list")) { // article list 출력
 				if (Articles.size() == 0) {
 					System.out.println("게시물이 없습니다.");
 					continue;
-				} else {
-					else {
-//						for(int i = Articles.size() / 5; i <= 0;  )
-						
-						for (int i = Articles.size() - 1; i >= 0; i--) {
-
-							PrintEquals.PrintFormat("List", i + 1); // ==
-
-							article article = Articles.get(i);
-							System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
+				} else if (Articles.size() > 5) {
+					while (true) {
+						int LastPage = Articles.size() / 5 + Articles.size() % 5;
+						System.out.printf("보고싶은 페이지 (현재 페이지 %d) : ", LastPage);
+						int page = s.nextInt();
+						if (page > LastPage || page == 0000) {
+							System.out.println("NO page.....");
+							// 현재 while 문을 나감
+							break;
+						} else {
+							if (page == LastPage) {
+								for (int i = (page * 5) - 5; i < Articles.size(); i++) {
+									article article = Articles.get(i);
+									System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
+								}
+							}
+							for (int i = (page * 5) - 5; i < page * 5; i++) {
+								article article = Articles.get(i);
+								System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
+							}
 						}
+
+					}
+				} else {
+
+//					for(int i = Articles.size() / 5; i <= 0;  )
+
+					for (int i = Articles.size() - 1; i >= 0; i--) {
+
+						PrintEquals.PrintFormat("List", i + 1); // ==
+
+						article article = Articles.get(i);
+						System.out.printf("번호 : %d\n제목 : %s\n", article.TextNum, article.TextTitle);
 					}
 
 					PrintEquals.main(); // ==
